@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/textmargin_top"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:padding="@dimen/d_smallest">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:clipToPadding="false"
+        android:elevation="2dp"
+        android:padding="@dimen/d_small">
+
+        <ImageView
+            android:id="@+id/ivThumbVideo"
+            android:layout_width="@dimen/textmargin_top"
+            android:layout_height="@dimen/textmargin_top"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_star" />
+
+        <ImageView
+            android:id="@+id/ivVideoPlay"
+            android:layout_width="@dimen/textmargin_top"
+            android:layout_height="@dimen/textmargin_top"
+            android:foreground="@drawable/foregroundoverlay"
+            android:padding="35dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_play_button" />
+
+        <TextView
+            android:id="@+id/tvVideoname"
+            android:layout_width="@dimen/textmargin_top"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_below="@+id/ivVideoPlay"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d_smallest"
+            android:fontFamily="@font/quicksand"
+            android:textSize="@dimen/d_normal"
+            tools:text="Offical Video" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

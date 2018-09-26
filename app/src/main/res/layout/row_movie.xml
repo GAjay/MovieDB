@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:elevation="2dp"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:elevation="5dp"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/thumb_transition_name" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivThumbnail"
+        android:background="@null"
+        android:ellipsize="end"
+        android:fontFamily="@font/arvo"
+        android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="The Movie Name can be long but not longer" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/ivThumbnail"
+        android:background="@null"
+        android:ellipsize="end"
+        android:fontFamily="@font/quicksand_light"
+        android:maxLines="2"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="The Movie Name can be long but not longer" />
+
+    <TextView
+        android:id="@+id/tvVotes"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tvDescription"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivThumbnail"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_star"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat"
+        android:lines="1"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        tools:text="990" />
+
+    <TextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDescription"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_weekly_calendar"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat"
+        android:lines="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        tools:text="1990" />
+</RelativeLayout>
+

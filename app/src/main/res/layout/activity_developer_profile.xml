@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightWhite"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarDeveloper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:visibility="visible">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appbar_height"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/collapsingToolbarChapterTestTitleAppearences"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            tools:background="@color/black">
+
+
+            <ImageView
+                android:id="@+id/ivThumbDeveloper"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/appbar_height"
+                android:adjustViewBounds="false"
+                android:contentDescription="@string/backdropimage"
+                android:foreground="@drawable/foregroundoverlay"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/thumb_transition_name"
+                tools:src="@drawable/ic_star" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:animateLayoutChanges="true"
+                    android:elevation="15dp"
+                    android:layout_marginTop="@dimen/d_large"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/thumb_place_holder"
+                    android:visibility="visible"
+                    app:layout_anchor="@id/appbar" />
+
+
+                <TextView
+                    android:id="@+id/tvDeveloperName"
+                    android:layout_below="@+id/ivProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/d_normal"
+                    android:layout_marginRight="@dimen/d_normal"
+                    android:layout_marginTop="@dimen/d_normal"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/raleway_medium"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_larger"
+                    tools:text="This is title" />
+
+                <TextView
+                    android:id="@+id/tvPost"
+                    android:layout_below="@+id/tvDeveloperName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/d_normal"
+                    android:layout_marginRight="@dimen/d_normal"
+                    android:layout_marginTop="@dimen/d_smallest"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/quicksand_light"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_normal"
+                    tools:text="This is title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bg_card_ll"
+                    android:elevation="2dp"
+                    android:layout_marginLeft="@dimen/d_normal"
+                    android:layout_marginRight="@dimen/d_normal"
+                    android:gravity="bottom"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/d_small"
+                    android:layout_below="@+id/tvPost"
+                    android:divider="@drawable/divider_cast"
+                    android:showDividers="middle"
+                    android:layout_marginBottom="@dimen/d_smallest"
+                    android:padding="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvExperience"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/d_normal"
+                        android:layout_marginRight="@dimen/d_normal"
+                        android:layout_marginTop="@dimen/d_smallest"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:fontFamily="@font/quicksand_light"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_normal"
+                        tools:text="This is title" />
+
+
+                    <TextView
+                        android:id="@+id/tvProjects"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/d_normal"
+                        android:layout_marginRight="@dimen/d_normal"
+                        android:layout_marginTop="@dimen/d_smallest"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/quicksand_light"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_normal"
+                        tools:text="This is title" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarDeveloper"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
+                android:gravity="center_vertical"
+                android:minHeight="?attr/actionBarSize"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/d_normal"
+            android:background="@null"
+            android:paddingBottom="@dimen/d_huge">
+
+            <LinearLayout
+                android:id="@+id/loadingProgressView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/d_smaller"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detailsView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/d_smallest"
+                android:background="@drawable/bg_card_activity"
+                android:clipToPadding="false"
+                android:elevation="2dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvAboutDeveloper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_light"
+                    android:text="@string/overview"
+                    android:paddingBottom="@dimen/d_smallest"
+                    android:paddingLeft="@dimen/d_small"
+                    android:paddingRight="@dimen/d_smallest"
+                    android:paddingTop="@dimen/d_smallest"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_small"
+                    />
+
+                <Button
+                    android:id="@+id/btnLinkedIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/tvMessage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d_normal"
+                    android:background="@drawable/bg_btn_round"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="@string/checkprofile"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_smaller" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

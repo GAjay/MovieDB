@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+android:color="@color/white">
+
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#27db84"
+                android:endColor="#00E77B"
+                android:angle="270" />
+            <corners android:radius="500dp"/>
+        </shape>
+    </item>
+
+</ripple>

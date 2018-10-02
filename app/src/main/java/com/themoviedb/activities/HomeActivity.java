@@ -42,6 +42,7 @@ import com.themoviedb.view.Utils;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -57,8 +58,6 @@ public class HomeActivity extends BaseActivity
     private View filterView, errorView;
     private View emptyView;
     private NumberPicker numberPicker1;
-    private Button btnResetFilters;
-    private Button btnFilterDone;
 
     private MovieListAdapter movieListAdapter;
 
@@ -84,7 +83,7 @@ public class HomeActivity extends BaseActivity
                 return true;
             }
 
-            public void callSearch(String query) {
+            private void callSearch(String query) {
                 //Do searching
                 Utils.hideKeyboard(HomeActivity.this);
                 int startYear = numberPicker1.getValue();
@@ -166,7 +165,7 @@ public class HomeActivity extends BaseActivity
                 rvMovies.setLayoutManager(layoutManager);
             } else {
                 DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-                itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
+                itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.divider)));
                 movieListAdapter.setIsgrid(false);
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                 rvMovies.setLayoutManager(layoutManager);
@@ -175,7 +174,7 @@ public class HomeActivity extends BaseActivity
             movieListAdapter.setMovieSelectionListener(new MovieListAdapter.OnMovieSelectionListener() {
                 @Override
                 public void onMovieSelected(MovieModel model, View view, int position) {
-                    movieSelected(model, view, position);
+                    movieSelected(model, view);
                 }
             });
         } else {
@@ -194,9 +193,9 @@ public class HomeActivity extends BaseActivity
                 if (presenter.isLoading()) {
                     return;
                 }
-                int visibleItemCount = 0;
-                int totalItemCount = 0;
-                int pastVisibleItems = 0;
+                int visibleItemCount;
+                int totalItemCount;
+                int pastVisibleItems;
                 if (rvMovies.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) rvMovies.getLayoutManager();
                     visibleItemCount = layoutManager.getChildCount();
@@ -226,7 +225,7 @@ public class HomeActivity extends BaseActivity
         numberPicker1.setMinValue(DiscoveryRequest.MIN_YEAR);
         numberPicker1.setMaxValue(DiscoveryRequest.MAX_YEAR);
 
-        btnFilterDone = findViewById(R.id.btnDone);
+        Button btnFilterDone = findViewById(R.id.btnDone);
         btnFilterDone.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -235,7 +234,7 @@ public class HomeActivity extends BaseActivity
             }
         });
 
-        btnResetFilters = findViewById(R.id.btnReset);
+        Button btnResetFilters = findViewById(R.id.btnReset);
         btnResetFilters.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -278,7 +277,7 @@ public class HomeActivity extends BaseActivity
     }
 
 
-    private void movieSelected(MovieModel model, View view, int position) {
+    private void movieSelected(MovieModel model, View view) {
         if (isFinishing()) {
             return;
         }
@@ -448,7 +447,7 @@ public class HomeActivity extends BaseActivity
     /**
      * Get error when service not working or something went wrong in it.
      *
-     * @param throwable
+     * @param throwable:error
      */
     @Override
     public void onError(Throwable throwable) {

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.themoviedb.R;
 
+import java.util.Objects;
+
 public class AboutAppActivity extends AppCompatActivity {
 
     @Override
@@ -41,7 +43,7 @@ public class AboutAppActivity extends AppCompatActivity {
             supportActionBar.setTitle(R.string.app_name);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back_arrow);
-            drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
+            Objects.requireNonNull(drawable).setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
             supportActionBar.setHomeAsUpIndicator(drawable);
         }
         toolbar.setTitleTextAppearance(this, R.style.RalewayTextAppearance);

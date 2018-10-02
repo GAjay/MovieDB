@@ -14,6 +14,8 @@ import android.webkit.WebView;
 import com.themoviedb.R;
 import com.themoviedb.apis.retrofit.AppConstants;
 
+import java.util.Objects;
+
 /**
  * A class to set view and load url as per request by side bar and other activities.
  *
@@ -39,7 +41,8 @@ public class WebViewActivity extends AppCompatActivity {
             supportActionBar.setTitle(R.string.app_name);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back_arrow);
-            drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
+
+            Objects.requireNonNull(drawable).setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
             supportActionBar.setHomeAsUpIndicator(drawable);
         }
         toolbar.setTitleTextAppearance(this, R.style.RalewayTextAppearance);

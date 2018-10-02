@@ -18,10 +18,8 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +34,8 @@ import com.bumptech.glide.request.target.Target;
 import com.themoviedb.R;
 import com.themoviedb.apis.retrofit.AppConstants;
 import com.themoviedb.glide.GlideApp;
+
+import java.util.Objects;
 
 public class AboutDeveloper extends AppCompatActivity {
 
@@ -127,7 +127,7 @@ public class AboutDeveloper extends AppCompatActivity {
             collapsingToolbar.setCollapsedTitleTypeface(typeface);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back_arrow);
-            drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
+            Objects.requireNonNull(drawable).setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
             supportActionBar.setHomeAsUpIndicator(drawable);
         }
 

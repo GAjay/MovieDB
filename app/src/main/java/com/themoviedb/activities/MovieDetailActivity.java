@@ -1,5 +1,6 @@
 package com.themoviedb.activities;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
@@ -147,6 +148,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
             collapsingToolbar.setCollapsedTitleTypeface(typeface);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             Drawable drawable = ContextCompat.getDrawable(this, R.drawable.back_arrow);
+            assert drawable != null;
             drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN);
             supportActionBar.setHomeAsUpIndicator(drawable);
         }
@@ -158,10 +160,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
     /**
      * A method to set data in layout after get response from presenter.
      *
-     * @param model
-     * @param credit
-     * @param recommendation
+     * @param model:Response
+     * @param credit:Response
+     * @param recommendation:Response
      */
+    @SuppressLint("SetTextI18n")
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -331,7 +334,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
             tvVotes.setText(Utils.boldString(spannableStringVotes, getString(R.string.votes)));
 
             SpannableString spannableStringRevenue = new SpannableString(
-                    getString(R.string.revenue) + "  " + getString(R.string.dollars) + Utils.coolFormat(Double.valueOf(model.getRevenue()), 0));
+                    getString(R.string.revenue) + "  " + getString(R.string.dollars) + Utils.coolFormat((double) model.getRevenue(), 0));
             tvRevenu.setText(Utils.boldString(spannableStringRevenue, getString(R.string.revenue)));
 
             //calculating profit.
@@ -342,7 +345,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
                         new DataPoint((Integer.valueOf(Utils.getYear(releaseDate)) - 2), 0),
                         new DataPoint((Integer.valueOf(Utils.getYear(releaseDate)) - 1), 0),
                         new DataPoint(Integer.valueOf(Utils.getYear(releaseDate)), Double.valueOf(
-                                Utils.removeLastChar(Utils.coolFormat(Double.valueOf(profit), 0))))
+                                Utils.removeLastChar(Utils.coolFormat((double) profit, 0))))
                 });
                 //setting graph
                 series.setTitle(getString(R.string.grossvalue));
@@ -370,7 +373,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
             Crew crewModel = crew.get(i);
             String department = crewModel.getDepartment();
             if (department.contains("Writing")) {
-                if (department != null && department.trim().length() > 0) {
+                if (department.trim().length() > 0) {
                     if (!isFirst) {
                         builder.append(separator);
                     } else {
@@ -403,12 +406,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
      * @param tvCountries:Textview
      */
     private void setCountryListInView(List<ProductionCountryModel> productionCountries, String separator, TextView tvCountries) {
-        List<ProductionCountryModel> countries = productionCountries;
         StringBuilder builder;
         builder = new StringBuilder();
-        int size = countries.size();
+        int size = productionCountries.size();
         for (int i = 0; i < size; i++) {
-            ProductionCountryModel countryModel = countries.get(i);
+            ProductionCountryModel countryModel = productionCountries.get(i);
             String name = countryModel.getName();
             if (name != null && name.trim().length() > 0) {
                 builder.append(name);
@@ -433,11 +435,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
      * @param tvLanguages: Textview
      */
     private void setDataOfSpokenLang(List<SpokenLanguageModel> spokenLanguages, String separator, TextView tvLanguages) {
-        List<SpokenLanguageModel> languages = spokenLanguages;
         StringBuilder builder = new StringBuilder();
-        int size = languages.size();
+        int size = spokenLanguages.size();
         for (int i = 0; i < size; i++) {
-            SpokenLanguageModel languageModel = languages.get(i);
+            SpokenLanguageModel languageModel = spokenLanguages.get(i);
             String name = languageModel.getName();
             if (name != null && name.trim().length() > 0) {
                 builder.append(name);
@@ -461,11 +462,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
      * @param tvGenre: Textview
      */
     private void setStringBuilderInView(String separator, List<GenreModel> genres, TextView tvGenre) {
-        List<GenreModel> genreModels = genres;
         StringBuilder builder = new StringBuilder();
-        int size = genreModels.size();
+        int size = genres.size();
         for (int i = 0; i < size; i++) {
-            GenreModel genreModel = genreModels.get(i);
+            GenreModel genreModel = genres.get(i);
             String name = genreModel.getName();
             if (name != null && name.trim().length() > 0) {
                 builder.append(name);
@@ -484,8 +484,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
     /**
      * A method to load company image.
      *
-     * @param logoPath
-     * @param iVProduction
+     * @param logoPath:URL
+     * @param iVProduction:View
      */
     private void loadImageCompany(String logoPath, ImageView iVProduction) {
 
@@ -504,8 +504,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
     /**
      * A method to load resized image in backdrop.
      *
-     * @param thumbnail
-     * @param ivThumbnail
+     * @param thumbnail:url
+     * @param ivThumbnail:view
      */
     private void loadResizedImageIntoView(String thumbnail, ImageView ivThumbnail) {
         GlideApp.with(this)
@@ -538,23 +538,15 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
     /**
      * A method for calculate movie time duration from runtime and return string value.
      *
-     * @param runTime
-     * @return
+     * @param runTime:value
+     * @return string
      */
     private String calTimeDuration(int runTime) {
-        String duration = "";
+        String duration;
         int hours = runTime / 60;
         int mins = runTime % 60;
         duration = String.valueOf(hours) + "h " + String.valueOf(mins) + "mins";
         return duration;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void setTransparentStatusBar(int color) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            getWindow().setStatusBarColor(color);
-        }
     }
 
     /**

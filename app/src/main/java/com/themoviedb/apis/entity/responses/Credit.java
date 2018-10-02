@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
+
 public class Credit {
 
     @SerializedName("id")
@@ -15,6 +18,8 @@ public class Credit {
     private List<Cast> cast = null;
     @SerializedName("crew")
     @Expose
+    @NonNull
+
     private List<Crew> crew = null;
 
     public Integer getId() {

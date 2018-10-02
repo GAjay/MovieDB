@@ -34,7 +34,7 @@ import com.themoviedb.BaseApplication;
 import com.themoviedb.R;
 import com.themoviedb.adapters.MovieListAdapter;
 import com.themoviedb.apis.request.DiscoveryRequest;
-import com.themoviedb.apis.retrofit.AppUrls;
+import com.themoviedb.apis.retrofit.AppConstants;
 import com.themoviedb.models.MovieModel;
 import com.themoviedb.presenters.HomePresenter;
 import com.themoviedb.view.Utils;
@@ -143,14 +143,17 @@ public class HomeActivity extends BaseActivity
      * A method for initalise view and set data in it.
      */
     private void initViews() {
-        String[] country = {"Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending"};
+        String[] country = {AppConstants.SortPopDesc,
+                AppConstants.SortPopASC,
+                AppConstants.SortRateDesc,
+                AppConstants.SortRateAsc};
         Spinner spin = findViewById(R.id.spinner);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, country);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
-
+        //set data in movielist adapter.
         movieListAdapter = new MovieListAdapter(this);
         drawer = findViewById(R.id.drawer_layout);
         rvMovies = findViewById(R.id.rvMovies);
@@ -351,14 +354,14 @@ public class HomeActivity extends BaseActivity
                 break;
             case R.id.project_github:
                 drawer.closeDrawer(GravityCompat.START);
-                intent= new Intent(this, WebViewActivity.class);
-                intent.putExtra(AppUrls.KEYURL, "https://github.com/GAjay/");
+                intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra(AppConstants.KEYURL, AppConstants.GITHUBURL);
                 startActivity(intent);
                 break;
             case R.id.iblog:
                 drawer.closeDrawer(GravityCompat.START);
                 intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra(AppUrls.KEYURL, "http://www.devtantra.com");
+                intent.putExtra(AppConstants.KEYURL, AppConstants.BLOGURL);
                 startActivity(intent);
                 break;
             case R.id.about_developer:
@@ -389,7 +392,7 @@ public class HomeActivity extends BaseActivity
 
 
     @Override
-    public void showMovies(List<MovieModel> movies, int minYear, int maxYear,String query) {
+    public void showMovies(List<MovieModel> movies, int minYear, int maxYear, String query) {
         if (isFinishing()) {
             return;
         }
@@ -399,7 +402,7 @@ public class HomeActivity extends BaseActivity
         }
 
         hideEmptyView();
-        movieListAdapter.setMovies(movies,query);
+        movieListAdapter.setMovies(movies, query);
 
         numberPicker1.setValue(minYear);
     }

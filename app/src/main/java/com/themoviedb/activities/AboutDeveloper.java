@@ -34,6 +34,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.themoviedb.R;
+import com.themoviedb.apis.retrofit.AppConstants;
 import com.themoviedb.glide.GlideApp;
 
 public class AboutDeveloper extends AppCompatActivity {
@@ -47,12 +48,12 @@ public class AboutDeveloper extends AppCompatActivity {
     }
 
     private void showAboutdDeveloper() {
-        ImageView cover = (ImageView) findViewById(R.id.ivThumbDeveloper);
-        ImageView profile = (ImageView) findViewById(R.id.ivProfile);
+        ImageView cover = findViewById(R.id.ivThumbDeveloper);
+        ImageView profile = findViewById(R.id.ivProfile);
 
         GlideApp.with(this)
                 // "https://img.youtube.com/vi/dNW0B0HsvVs/hqdefault.jpg"
-                .load("https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-9/c0.550.851.315/p851x315/32390698_1684096148325748_3742976561519788032_o.jpg?_nc_cat=111&oh=1ffbaeeef3a0271ab1f5a82aabcb66bf&oe=5C243D13")
+                .load(AppConstants.COVER_URL)
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.thumb_place_holder)
                         .error(R.drawable.thumb_place_holder)
@@ -78,10 +79,10 @@ public class AboutDeveloper extends AppCompatActivity {
 
         GlideApp.with(this)
                 .asBitmap()
-                .load("https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/c0.0.160.160/p160x160/13495103_1041410502594319_8792966778190193669_n.jpg?_nc_cat=110&oh=90cf77b37c1a6c1aa45f4463f5cff0bb&oe=5C56BC66")
+                .load(AppConstants.PROFILE_URL)
                 .apply(new RequestOptions()
-                        .placeholder(R.drawable.thumb_place_holder)
-                        .error(R.drawable.thumb_place_holder)
+                        .placeholder(R.drawable.ic_user)
+                        .error(R.drawable.ic_user)
                         .transform(new RoundedCorners(200))
                         .override((int) getResources().getDimension(R.dimen.movie_card_width), (int) getResources().getDimension(R.dimen.movie_card_width))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -93,16 +94,16 @@ public class AboutDeveloper extends AppCompatActivity {
         ((TextView) findViewById(R.id.tvProjects)).setText(getString(R.string.nProjects));
         ((TextView) findViewById(R.id.tvPost)).setText(R.string.post);
         ((TextView) findViewById(R.id.tvAboutDeveloper)).setText(getString(R.string.aboutmes));
-        ((Button) findViewById(R.id.btnLinkedIn)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnLinkedIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.linkedin.com/in/ajaymaheshwari24/";
+                String url = AppConstants.LINKEDINURL;
                 try {
                     Uri webpage = Uri.parse(url);
                     Intent myIntent = new Intent(Intent.ACTION_VIEW, webpage);
                     startActivity(myIntent);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(AboutDeveloper.this, "No application can handle this request. Please install a web browser or check your URL.",  Toast.LENGTH_LONG).show();
+                    Toast.makeText(AboutDeveloper.this, R.string.errorNoAPP,  Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }

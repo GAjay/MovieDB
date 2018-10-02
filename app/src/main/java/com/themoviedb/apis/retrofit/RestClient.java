@@ -31,7 +31,7 @@ public class RestClient {
 
     private static void setupRestClient() {
 
-        Retrofit retrofit = getRetrofitClient(AppUrls.BASE_URL);
+        Retrofit retrofit = getRetrofitClient(AppConstants.BASE_URL);
         restClient = retrofit.create(ApiInterface.class);
     }
 

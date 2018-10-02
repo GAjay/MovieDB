@@ -1,12 +1,10 @@
 package com.themoviedb.presenters;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.themoviedb.BaseApplication;
-import com.themoviedb.R;
 import com.themoviedb.apis.request.DiscoveryRequest;
-import com.themoviedb.apis.retrofit.AppUrls;
+import com.themoviedb.apis.retrofit.AppConstants;
 import com.themoviedb.models.DiscoverModel;
 import com.themoviedb.models.MovieModel;
 import com.themoviedb.repositories.MovieRepository;
@@ -95,16 +93,16 @@ public class HomePresenter {
     private String getSortBy(String text) {
         String sortBy = null;
         switch (text) {
-            case AppUrls.SortPopDesc:
+            case AppConstants.SortPopDesc:
                 sortBy = popDesc;
                 break;
-            case AppUrls.SortPopASC:
+            case AppConstants.SortPopASC:
                 sortBy = popAsc;
                 break;
-            case AppUrls.SortRateDesc:
+            case AppConstants.SortRateDesc:
                 sortBy = voteDesc;
                 break;
-            case AppUrls.SortRateAsc:
+            case AppConstants.SortRateAsc:
                 sortBy = voteAsc;
                 break;
             default:

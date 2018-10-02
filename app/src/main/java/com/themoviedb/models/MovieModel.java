@@ -5,9 +5,6 @@ import com.themoviedb.apis.entity.responses.ProductCompaine;
 
 import java.util.List;
 
-import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
-
 /**
  * Created by Ajay Kumar Maheshwari .
  */

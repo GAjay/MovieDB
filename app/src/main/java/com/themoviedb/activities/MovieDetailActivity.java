@@ -17,7 +17,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,9 +24,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +61,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppConstants.LARGER_IMAGES_BASE_URL;
 
 
 /*
@@ -128,7 +125,6 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
         tvDir = findViewById(R.id.tvDir);
         tvWriter = findViewById(R.id.tvWriter);
         tvVotes = findViewById(R.id.tvVotes);
-
         tvRevenu = findViewById(R.id.tvRevenu);
     }
 
@@ -185,6 +181,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
 
         final MovieModel movie = model.getMovie();
         if (movie != null) {
+
             String thumbnail = movie.getBackdropPath();
             loadResizedImageIntoView(thumbnail, ivThumbnail);
             if (null != model.getProductionCompanies() && model.getProductionCompanies().size() > 0) {
@@ -196,6 +193,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
             } else {
                 iVProduction.setVisibility(View.GONE);
             }
+
             appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
                 @Override
                 public void onStateChanged(AppBarLayout appBarLayout, State state, int verticalOffset) {
@@ -251,55 +249,29 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
                     startActivity(Intent.createChooser(share, getString(R.string.share)));
                 }
             });
-
-
             String separator = " | ";
-            if (null != model.getGenres()) {
-                if (model.getGenres().size() > 0) {
-                    List<GenreModel> genres = model.getGenres();
-                    if (genres != null) {
-                        StringBuilder builder = new StringBuilder();
-                        int size = genres.size();
-                        for (int i = 0; i < size; i++) {
-                            GenreModel genreModel = genres.get(i);
-                            String name = genreModel.getName();
-                            if (name != null && name.trim().length() > 0) {
-                                builder.append(name);
-                                if (i < size - 1) {
-                                    builder.append(separator);
-                                }
-                            }
-                        }
-                        if (builder.length() > 0) {
-                            SpannableString spannableString = new SpannableString(getString(R.string.genres) + " " + builder.toString().trim());
-                            tvGenre.setText(Utils.boldString(spannableString, getString(R.string.genres)));
-
-                        }
-                    }
-                } else {
-                    tvGenre.setVisibility(View.GONE);
-                }
+            if (model.getGenres().size() > 0) {
+               setStringBuilderInView(separator,model.getGenres(),tvGenre);
+            } else {
+                tvGenre.setVisibility(View.GONE);
             }
 
             //movie actors and cast team
             RecyclerView recyclerView = findViewById(R.id.rlCast);
-            if (null != credit.getCast()) {
-                if (credit.getCast().size() > 0) {
-                    recyclerView.setAdapter(new CastAdapter(credit.getCast(), MovieDetailActivity.this));
-                } else {
-                    findViewById(R.id.tvCastsLabel).setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.GONE);
-                }
+            if (credit.getCast().size() > 0) {
+                recyclerView.setAdapter(new CastAdapter(credit.getCast(),
+                        MovieDetailActivity.this));
+            } else {
+                findViewById(R.id.tvCastsLabel).setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
             }
             //recommendation
             RecyclerView recycler = findViewById(R.id.rlRecoomedndation);
-            if (null != recommendation.getResults()) {
-                if (recommendation.getResults().size() > 0) {
-                    recycler.setAdapter(new RecommendationAdapter(recommendation.getResults(), MovieDetailActivity.this));
-                } else {
-                    findViewById(R.id.tvRecommendationlabel).setVisibility(View.GONE);
-                    recycler.setVisibility(View.GONE);
-                }
+            if (recommendation.getResults().size() > 0) {
+                recycler.setAdapter(new RecommendationAdapter(recommendation.getResults(), MovieDetailActivity.this));
+            } else {
+                findViewById(R.id.tvRecommendationlabel).setVisibility(View.GONE);
+                recycler.setVisibility(View.GONE);
             }
             //Movie videos
             RecyclerView recyclerViewVideos = findViewById(R.id.rlVideos);
@@ -309,111 +281,42 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
                 findViewById(R.id.tvVideosLabel).setVisibility(View.GONE);
                 recyclerViewVideos.setVisibility(View.GONE);
             }
-            if (null != model.getSpokenLanguages()) {
-                if (model.getSpokenLanguages().size() > 0) {
-                    List<SpokenLanguageModel> languages = model.getSpokenLanguages();
-                    if (languages != null) {
-                        StringBuilder builder = new StringBuilder();
-                        int size = languages.size();
-                        for (int i = 0; i < size; i++) {
-                            SpokenLanguageModel languageModel = languages.get(i);
-                            String name = languageModel.getName();
-                            if (name != null && name.trim().length() > 0) {
-                                builder.append(name);
-                                if (i < size - 1) {
-                                    builder.append(separator);
-                                }
-                            }
-                        }
-                        if (builder.length() > 0) {
-                            SpannableString spannableString = new SpannableString(getString(R.string.lang) + " " + builder.toString().trim());
-
-                            tvLanguages.setText(Utils.boldString(spannableString, getString(R.string.lang)));
-                        }
-                    }
-                } else {
-                    tvLanguages.setVisibility(View.GONE);
-                }
+            //set available languages list of movie's in view
+            if (model.getSpokenLanguages().size() > 0) {
+                setDataOfSpokenLang(model.getSpokenLanguages(),separator,tvLanguages);
+            } else {
+                tvLanguages.setVisibility(View.GONE);
             }
 
-
+            //set crew data in view
             List<Crew> crew = credit.getCrew();
-            if (crew != null && crew.size() > 0) {
-                StringBuilder builder = new StringBuilder();
-                int size = crew.size();
-                boolean isFirst = true;
-                for (int i = 0; i < size; i++) {
-                    Crew crewModel = crew.get(i);
-                    String department = crewModel.getDepartment();
-                    if (department.contains("Writing")) {
-                        if (department != null && department.trim().length() > 0) {
-                            if (!isFirst) {
-                                builder.append(separator);
-                            } else {
-                                isFirst = false;
-                            }
-                            builder.append(crewModel.getName());
-
-                        }
-                    } else if (department.contains("Directing") && crewModel.getJob().equalsIgnoreCase("Director")) {
-                        SpannableString spannableString = new SpannableString(getString(R.string.director) + " " + crewModel.getName().trim());
-                        tvDir.setText(Utils.boldString(spannableString, getString(R.string.director)));
-
-                    }
-                }
-                if (builder.length() > 0) {
-                    SpannableString spannableString = new SpannableString(getString(R.string.writer) + " " + builder.toString().trim());
-                    tvWriter.setText(Utils.boldString(spannableString, getString(R.string.writer)));
-                }
-
-                if (isFirst) {
-                    tvWriter.setVisibility(View.GONE);
-                }
+            if (crew.size() > 0) {
+                setCrewDataInView(crew,separator,tvWriter,tvDir);
             } else {
                 tvWriter.setVisibility(View.GONE);
                 tvDir.setVisibility(View.GONE);
             }
 
-
-            if (null != model.getProductionCountries()) {
-                if (model.getProductionCountries().size() > 0) {
-                    List<ProductionCountryModel> countries = model.getProductionCountries();
-                    StringBuilder builder;
-                    if (countries != null) {
-                        builder = new StringBuilder();
-                        int size = countries.size();
-                        for (int i = 0; i < size; i++) {
-                            ProductionCountryModel countryModel = countries.get(i);
-                            String name = countryModel.getName();
-                            if (name != null && name.trim().length() > 0) {
-                                builder.append(name);
-                                if (i < size - 1) {
-                                    builder.append(separator);
-                                }
-                            }
-                        }
-                        if (builder.length() > 0) {
-                            SpannableString spannableString = new SpannableString(getString(R.string.country) + " " + builder.toString().trim());
-                            tvCountries.setText(Utils.boldString(spannableString, getString(R.string.country)));
-
-                        }
-                    }
-                } else {
-                    tvCountries.setVisibility(View.GONE);
-                }
+            //set released country list data in view
+            if (model.getProductionCountries().size() > 0) {
+             setCountryListInView(model.getProductionCountries(),separator,tvCountries);
+            } else {
+                tvCountries.setVisibility(View.GONE);
             }
-
-
+            //set movie tag line in view
             if (null != model.getTagline())
                 ((TextView) findViewById(R.id.tvTagline)).setText(model.getTagline());
             else
                 findViewById(R.id.tvTagline).setVisibility(View.GONE);
+
+            //set overview of movie and concept in view.
             String overview = movie.getOverview();
             if (overview != null && overview.trim().length() > 0) {
                 tvOverView.setText(overview);
             } else {
                 tvOverView.setText(getString(R.string.nooverview));
             }
+
             String releaseDate = movie.getReleaseDate();
             if (!TextUtils.isEmpty(movie.getReleaseDate())) {
                 tvReleaseDate.setText(calTimeDuration(model.getRuntime()) + " " + Utils.getDate(releaseDate));
@@ -427,9 +330,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
             SpannableString spannableStringVotes = new SpannableString(getString(R.string.votes) + "  " + String.valueOf(movie.getVoteCount()));
             tvVotes.setText(Utils.boldString(spannableStringVotes, getString(R.string.votes)));
 
-            SpannableString spannableStringrevenue = new SpannableString(
+            SpannableString spannableStringRevenue = new SpannableString(
                     getString(R.string.revenue) + "  " + getString(R.string.dollars) + Utils.coolFormat(Double.valueOf(model.getRevenue()), 0));
-            tvRevenu.setText(Utils.boldString(spannableStringrevenue, getString(R.string.revenue)));
+            tvRevenu.setText(Utils.boldString(spannableStringRevenue, getString(R.string.revenue)));
 
             //calculating profit.
             int profit = model.getRevenue() - model.getBudget();
@@ -452,20 +355,158 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailPres
 
     }
 
+    /**
+     * A method to set data of crew according to department in different view.
+     * @param crew: List of all crew members.
+     * @param separator: String separator
+     * @param tvWriter:writer Textview
+     * @param tvDir:director Textview
+     */
+    private void setCrewDataInView(List<Crew> crew, String separator, TextView tvWriter, TextView tvDir) {
+        StringBuilder builder = new StringBuilder();
+        int size = crew.size();
+        boolean isFirst = true;
+        for (int i = 0; i < size; i++) {
+            Crew crewModel = crew.get(i);
+            String department = crewModel.getDepartment();
+            if (department.contains("Writing")) {
+                if (department != null && department.trim().length() > 0) {
+                    if (!isFirst) {
+                        builder.append(separator);
+                    } else {
+                        isFirst = false;
+                    }
+                    builder.append(crewModel.getName());
+
+                }
+            } else if (department.contains("Directing") && crewModel.getJob().equalsIgnoreCase("Director")) {
+                SpannableString spannableString = new SpannableString(getString(R.string.director) + " " + crewModel.getName().trim());
+                tvDir.setText(Utils.boldString(spannableString, getString(R.string.director)));
+
+            }
+        }
+        if (builder.length() > 0) {
+            SpannableString spannableString = new SpannableString(getString(R.string.writer) + " " + builder.toString().trim());
+            tvWriter.setText(Utils.boldString(spannableString, getString(R.string.writer)));
+        }
+
+        if (isFirst) {
+            tvWriter.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * A method to set data of movie availability in countries inside view.
+     *
+     * @param productionCountries : list of countries
+     * @param separator: String separator
+     * @param tvCountries:Textview
+     */
+    private void setCountryListInView(List<ProductionCountryModel> productionCountries, String separator, TextView tvCountries) {
+        List<ProductionCountryModel> countries = productionCountries;
+        StringBuilder builder;
+        builder = new StringBuilder();
+        int size = countries.size();
+        for (int i = 0; i < size; i++) {
+            ProductionCountryModel countryModel = countries.get(i);
+            String name = countryModel.getName();
+            if (name != null && name.trim().length() > 0) {
+                builder.append(name);
+                if (i < size - 1) {
+                    builder.append(separator);
+                }
+            }
+        }
+        if (builder.length() > 0) {
+            SpannableString spannableString = new SpannableString(getString(R.string.country) + " " + builder.toString().trim());
+            tvCountries.setText(Utils.boldString(spannableString, getString(R.string.country)));
+
+        }
+
+    }
+
+    /**
+     * A method to set movie in type's of lang in view.
+     *
+     * @param spokenLanguages:list of movies.
+     * @param separator:String
+     * @param tvLanguages: Textview
+     */
+    private void setDataOfSpokenLang(List<SpokenLanguageModel> spokenLanguages, String separator, TextView tvLanguages) {
+        List<SpokenLanguageModel> languages = spokenLanguages;
+        StringBuilder builder = new StringBuilder();
+        int size = languages.size();
+        for (int i = 0; i < size; i++) {
+            SpokenLanguageModel languageModel = languages.get(i);
+            String name = languageModel.getName();
+            if (name != null && name.trim().length() > 0) {
+                builder.append(name);
+                if (i < size - 1) {
+                    builder.append(separator);
+                }
+            }
+        }
+        if (builder.length() > 0) {
+            SpannableString spannableString = new SpannableString(getString(R.string.lang) + " " + builder.toString().trim());
+            tvLanguages.setText(Utils.boldString(spannableString, getString(R.string.lang)));
+        }
+
+    }
+
+    /**
+     * A method of set data in view of genres.
+     *
+     * @param separator: String
+     * @param genres: @GenreModel data type list
+     * @param tvGenre: Textview
+     */
+    private void setStringBuilderInView(String separator, List<GenreModel> genres, TextView tvGenre) {
+        List<GenreModel> genreModels = genres;
+        StringBuilder builder = new StringBuilder();
+        int size = genreModels.size();
+        for (int i = 0; i < size; i++) {
+            GenreModel genreModel = genreModels.get(i);
+            String name = genreModel.getName();
+            if (name != null && name.trim().length() > 0) {
+                builder.append(name);
+                if (i < size - 1) {
+                    builder.append(separator);
+                }
+            }
+        }
+        if (builder.length() > 0) {
+            SpannableString spannableString = new SpannableString(getString(R.string.genres) + " " + builder.toString().trim());
+            tvGenre.setText(Utils.boldString(spannableString, getString(R.string.genres)));
+
+        }
+    }
+
+    /**
+     * A method to load company image.
+     *
+     * @param logoPath
+     * @param iVProduction
+     */
     private void loadImageCompany(String logoPath, ImageView iVProduction) {
 
         GlideApp.with(this)
                 .asBitmap()
                 .load(LARGER_IMAGES_BASE_URL + logoPath.replace("/", ""))
                 .apply(new RequestOptions()
-                        .placeholder(R.drawable.thumb_place_holder)
-                        .error(R.drawable.thumb_place_holder)
+                        .placeholder(R.drawable.ic_loading)
+                        .error(R.drawable.ic_loading)
                         .override((int) getResources().getDimension(R.dimen.movie_image_width), (int) getResources().getDimension(R.dimen.d_larger))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(false))
                 .into(iVProduction);
     }
 
+    /**
+     * A method to load resized image in backdrop.
+     *
+     * @param thumbnail
+     * @param ivThumbnail
+     */
     private void loadResizedImageIntoView(String thumbnail, ImageView ivThumbnail) {
         GlideApp.with(this)
                 // "https://img.youtube.com/vi/dNW0B0HsvVs/hqdefault.jpg"

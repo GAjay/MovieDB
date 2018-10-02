@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.themoviedb.R;
 import com.themoviedb.apis.entity.responses.ResultsItem;
-import com.themoviedb.apis.retrofit.AppUrls;
+import com.themoviedb.apis.retrofit.AppConstants;
 import com.themoviedb.glide.GlideApp;
 import com.themoviedb.glide.GlideRequest;
 import com.themoviedb.glide.GlideRequests;
@@ -55,19 +55,19 @@ public class VideoListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             viewHolder.itemView.setVisibility(View.VISIBLE);
             requestBuilder.clone()
-                    .load(AppUrls.IMG_YouTUBE + itemsData.get(position).getKey() + AppUrls.IMG_YOUTUBE_TYPE)
+                    .load(AppConstants.IMG_YouTUBE + itemsData.get(position).getKey() + AppConstants.IMG_YOUTUBE_TYPE)
                     .placeholder(R.drawable.thumb_place_holder)
                     .error(R.drawable.thumb_place_holder)
                     .transform(new RoundedCorners(5))
                     .into(viewHolder.iThumb);
 
-            GlideApp.with(activity).load(AppUrls.IMG_YouTUBE + itemsData.get(position).getKey() + AppUrls.IMG_YOUTUBE_TYPE)
+            GlideApp.with(activity).load(AppConstants.IMG_YouTUBE + itemsData.get(position).getKey() + AppConstants.IMG_YOUTUBE_TYPE)
                     .preload();
             //playing video
             viewHolder.iVideosPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppUrls.YOUTUBELINK + itemsData.get(position).getKey())));
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.YOUTUBELINK + itemsData.get(position).getKey())));
                     Log.i("Video", "Video Playing....");
                 }
             });
@@ -87,9 +87,9 @@ public class VideoListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            iThumb = (ImageView) itemLayoutView.findViewById(R.id.ivThumbVideo);
-            iVideosPlay = (ImageView) itemLayoutView.findViewById(R.id.ivVideoPlay);
-            tVideo = (TextView) itemLayoutView.findViewById(R.id.tvVideoname);
+            iThumb = itemLayoutView.findViewById(R.id.ivThumbVideo);
+            iVideosPlay = itemLayoutView.findViewById(R.id.ivVideoPlay);
+            tVideo = itemLayoutView.findViewById(R.id.tvVideoname);
         }
     }
 

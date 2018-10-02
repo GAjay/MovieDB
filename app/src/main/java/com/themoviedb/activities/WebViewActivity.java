@@ -1,6 +1,5 @@
 package com.themoviedb.activities;
 
-import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.themoviedb.R;
-import com.themoviedb.apis.retrofit.AppUrls;
+import com.themoviedb.apis.retrofit.AppConstants;
 
 /**
  * A class to set view and load url as per request by side bar and other activities.
@@ -27,8 +26,8 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         setNavigationAndToolBar();
 
-        WebView webView = (WebView) findViewById(R.id.webView);
-        webView.loadUrl(getIntent().getStringExtra(AppUrls.KEYURL));
+        WebView webView = findViewById(R.id.webView);
+        webView.loadUrl(getIntent().getStringExtra(AppConstants.KEYURL));
     }
 
     private void setNavigationAndToolBar() {

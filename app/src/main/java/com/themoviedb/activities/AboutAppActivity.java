@@ -28,9 +28,7 @@ public class AboutAppActivity extends AppCompatActivity {
     private void showAboutApp() {
 
         TextView tvAboutApp = findViewById(R.id.tvAboutApp);
-        String source = "<p>The MVP sample app with Dagger2 that shows list of movies and their details from<strong>&nbsp; TheMovieDb API</strong> : <a href=\"https://www.themoviedb.org\">https://www.themoviedb.org</a></p>\n" +
-                "<p><em>#MVP, #Dagger2, #RxJava2, #Retrofit2, #AndroidInstrumentedUnitTesting</em></p>\n" +
-                "<p>By:&nbsp; <strong>Ajay Kumar Maheshwari</strong></p>";
+        String source = getString(R.string.aboutAPPString);
         tvAboutApp.setText(Html.fromHtml(source));
     }
 

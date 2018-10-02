@@ -11,6 +11,8 @@ import com.themoviedb.apis.entity.responses.Videos;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
+
 /**
  * Created by Ajay Kumar Maheshwari .
  */
@@ -24,13 +26,13 @@ public class MovieDetailModel {
 
     private int budget;
     private boolean adult;
-
+    @NonNull
     private List<GenreModel> genres;
 
     private String homepage;
-
+    @NonNull
     private List<ProductionCompanyModel> productionCompanies = null;
-
+    @NonNull
     private List<ProductionCountryModel> productionCountries = null;
 
     private int revenue;
@@ -38,7 +40,7 @@ public class MovieDetailModel {
     private int runtime;
 
     private int color;
-
+    @NonNull
     private List<SpokenLanguageModel> spokenLanguages = null;
 
     private String status;
@@ -78,7 +80,7 @@ public class MovieDetailModel {
         this.movie.setOverview(parser.getOverview());
         this.movie.setReleaseDate(parser.getReleaseDate());
         this.movie.setAdult(parser.isAdult());
-        this.videos=parser.getVideo();
+        this.videos = parser.getVideo();
 
         this.budget = parser.getBudget();
         this.genres = new ArrayList<>();
@@ -86,7 +88,7 @@ public class MovieDetailModel {
         for (GenreParser genreParser : genreParsers) {
             genres.add(new GenreModel(genreParser));
         }
-        this.casts= parser.getCast();
+        this.casts = parser.getCast();
 
         this.homepage = parser.getHomepage();
 

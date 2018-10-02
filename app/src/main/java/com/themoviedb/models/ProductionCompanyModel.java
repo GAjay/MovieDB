@@ -2,8 +2,6 @@ package com.themoviedb.models;
 
 import com.themoviedb.apis.entity.responses.ProductionCompanyParser;
 
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
-
 /**
  * Created by Ajay Kumar Maheshwari .
  */

@@ -4,6 +4,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.reactivex.annotations.NonNull;
+
 public class Recommendation {
 
     @SerializedName("page")
@@ -11,6 +13,7 @@ public class Recommendation {
     private Integer page;
     @SerializedName("results")
     @Expose
+    @NonNull
     private List<RecommendateResult> results = null;
     @SerializedName("total_pages")
     @Expose

@@ -67,4 +67,6 @@
     <string name="grossvalue">Gross Value</string>
     <string name="ten">/10</string>
     <string name="overviewplot">Overview(Plot)</string>
+    <string name="aboutAPPString"><![CDATA[<p>The MVP sample app with Dagger2 that shows list of movies and their details from<strong>&nbsp; TheMovieDb API</strong> : <a href=\\\"https://www.themoviedb.org\\\">https://www.themoviedb.org</a></p><p><em>#MVP, #Dagger2, #RxJava2, #Retrofit2, #AndroidInstrumentedUnitTesting</em></p><p>By:&nbsp; <strong>Ajay Kumar Maheshwari</strong></p>]]></string>
+    <string name="errorNoAPP">No application can handle this request. Please install a web browser or check your URL.</string>
 </resources>

@@ -18,7 +18,6 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.themoviedb.R;
-import com.themoviedb.apis.request.DiscoveryRequest;
 import com.themoviedb.glide.GlideApp;
 import com.themoviedb.glide.GlideRequest;
 import com.themoviedb.glide.GlideRequests;
@@ -30,7 +29,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppConstants.IMAGES_BASE_URL;
 
 /**
  * Created by Ajay Kumar Maheshwari .

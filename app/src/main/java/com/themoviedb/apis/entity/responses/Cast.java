@@ -3,8 +3,6 @@ package com.themoviedb.apis.entity.responses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
-
 public class Cast {
 
     @SerializedName("cast_id")

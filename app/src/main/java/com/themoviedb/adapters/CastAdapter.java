@@ -19,8 +19,7 @@ import com.themoviedb.glide.GlideRequests;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
-import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppConstants.IMAGES_BASE_URL;
 
 public class CastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Cast> itemsData = new ArrayList<>();

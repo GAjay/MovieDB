@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.themoviedb.R;
-import com.themoviedb.activities.HomeActivity;
 import com.themoviedb.activities.MovieDetailActivity;
 import com.themoviedb.apis.entity.responses.RecommendateResult;
 import com.themoviedb.glide.GlideApp;
@@ -25,8 +22,7 @@ import com.themoviedb.glide.GlideRequests;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppConstants.IMAGES_BASE_URL;
 
 public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<RecommendateResult> itemsData = new ArrayList<>();

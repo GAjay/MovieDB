@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
 
 public class CastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Cast> itemsData = new ArrayList<>();
@@ -50,13 +51,13 @@ public class CastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (null != itemsData.get(position).getProfilePath()) {
             requestBuilder.clone()
-                    .load(LARGER_IMAGES_BASE_URL + itemsData.get(position).getProfilePath().replace("/", ""))
+                    .load(IMAGES_BASE_URL + itemsData.get(position).getProfilePath().replace("/", ""))
                     .placeholder(R.drawable.ic_user)
                     .error(R.drawable.ic_user)
                     .transform(new RoundedCorners(100))
                     .into(viewHolder.imgViewIcon);
 
-            GlideApp.with(activity).load(LARGER_IMAGES_BASE_URL + itemsData.get(position).getProfilePath().replace("/", ""))
+            GlideApp.with(activity).load(IMAGES_BASE_URL + itemsData.get(position).getProfilePath().replace("/", ""))
                     .preload();
         }
         else{
@@ -70,7 +71,7 @@ public class CastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.ivCasts);
+            imgViewIcon = itemLayoutView.findViewById(R.id.ivCasts);
         }
     }
 

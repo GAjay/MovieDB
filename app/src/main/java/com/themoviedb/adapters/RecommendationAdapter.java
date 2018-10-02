@@ -25,6 +25,7 @@ import com.themoviedb.glide.GlideRequests;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
 import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
 
 public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -55,13 +56,13 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         final RecommendationAdapter.ViewHolder viewHolder = (RecommendationAdapter.ViewHolder) holder;
         if (null != itemsData.get(position).getBackdropPath()) {
             requestBuilder.clone()
-                    .load(LARGER_IMAGES_BASE_URL + itemsData.get(position).getBackdropPath().replace("/", ""))
+                    .load(IMAGES_BASE_URL + itemsData.get(position).getBackdropPath().replace("/", ""))
                     .placeholder(R.drawable.thumb_place_holder)
                     .error(R.drawable.ic_user)
                     .transform(new RoundedCorners(10))
                     .into(viewHolder.ivThumbnail);
 
-            GlideApp.with(activity).load(LARGER_IMAGES_BASE_URL + itemsData.get(position).getBackdropPath().replace("/", ""))
+            GlideApp.with(activity).load(IMAGES_BASE_URL + itemsData.get(position).getBackdropPath().replace("/", ""))
                     .preload();
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

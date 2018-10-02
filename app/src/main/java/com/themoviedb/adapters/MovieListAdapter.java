@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import static com.themoviedb.apis.retrofit.AppUrls.LARGER_IMAGES_BASE_URL;
+import static com.themoviedb.apis.retrofit.AppUrls.IMAGES_BASE_URL;
 
 /**
  * Created by Ajay Kumar Maheshwari .
@@ -163,7 +163,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void setImageInView(MovieModel model, ImageView imageView) {
         requestBuilder.clone()
-                .load((null != model.getPosterPath()) ? LARGER_IMAGES_BASE_URL + model.getPosterPath().replace("/", "") : R.drawable.thumb_place_holder)
+                .load((null != model.getPosterPath()) ? IMAGES_BASE_URL + model.getPosterPath().replace("/", "") : R.drawable.thumb_place_holder)
                 .placeholder(R.drawable.thumb_place_holder)
                 .error(R.drawable.thumb_place_holder)
                 .transform(new RoundedCorners(10))
@@ -171,7 +171,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .skipMemoryCache(false)
                 .into(imageView);
 
-        GlideApp.with(activity).load((null != model.getPosterPath()) ? LARGER_IMAGES_BASE_URL + model.getPosterPath().replace("/", "") : R.drawable.thumb_place_holder)
+        GlideApp.with(activity).load((null != model.getPosterPath()) ? IMAGES_BASE_URL + model.getPosterPath().replace("/", "") : R.drawable.thumb_place_holder)
                 .preload();
     }
 

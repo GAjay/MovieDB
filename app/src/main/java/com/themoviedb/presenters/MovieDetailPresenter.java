@@ -91,6 +91,9 @@ public class MovieDetailPresenter {
     public void cleanUp() {
         movieId = 0;
         movieDetail = null;
+        credit=null;
+        movieDetailView=null;
+        recommendation=null;
     }
 
     public interface MovieDetailView {

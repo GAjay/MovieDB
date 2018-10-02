@@ -88,14 +88,14 @@ public class HomeActivity extends BaseActivity
                 //Do searching
                 Utils.hideKeyboard(HomeActivity.this);
                 int startYear = numberPicker1.getValue();
-                Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
+                Spinner mySpinner = findViewById(R.id.spinner);
                 String text = mySpinner.getSelectedItem().toString();
-                String sortby = getSortBy(text);
-                presenter.filterMovieList(startYear, 0, sortby, query);
+                presenter.filterMovieList(startYear, 0, text, query);
                 Log.i("query", "" + query);
 
             }
         });
+
         //getting searchbar event
         mSearch.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -133,12 +133,18 @@ public class HomeActivity extends BaseActivity
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.clear();
+    }
+
     /**
      * A method for initalise view and set data in it.
      */
     private void initViews() {
         String[] country = {"Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending"};
-        Spinner spin = (Spinner) findViewById(R.id.spinner);
+        Spinner spin = findViewById(R.id.spinner);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, country);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -262,39 +268,12 @@ public class HomeActivity extends BaseActivity
         hideFilterMenu();
         Utils.hideKeyboard(HomeActivity.this);
         int startYear = numberPicker1.getValue();
-        Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
+        Spinner mySpinner = findViewById(R.id.spinner);
         String text = mySpinner.getSelectedItem().toString();
-        String sortby = getSortBy(text);
-        presenter.filterMovieList(startYear, 0, sortby, null);
+
+        presenter.filterMovieList(startYear, 0, text, null);
     }
 
-    /**
-     * A method to return sort by value from spinner.
-     *
-     * @param text
-     * @return
-     */
-    private String getSortBy(String text) {
-        String sortby = null;
-        switch (text) {
-            case "Popularity Descending":
-                sortby = "popularity.desc";
-                break;
-            case "Popularity Ascending":
-                sortby = "popularity.asc";
-                break;
-            case "Rating Descending":
-                sortby = "vote_average.desc";
-                break;
-            case "Rating Ascending":
-                sortby = "vote_average.asc";
-                break;
-            default:
-                sortby = "popularity.desc";
-                break;
-        }
-        return sortby;
-    }
 
     private void movieSelected(MovieModel model, View view, int position) {
         if (isFinishing()) {
@@ -328,7 +307,7 @@ public class HomeActivity extends BaseActivity
         toggle.syncState();
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         toolbar.setTitleTextAppearance(this, R.style.RalewayTextAppearance);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
